@@ -24,27 +24,26 @@ app.get('/location', (request, response) => {
     errorHandler(error, request, response);
   }
 });
-// app.get('/weather', (request, response) => {
-//   const weatherFile = require('./data/darksky.json');
-//   let arr=[];
-//   weatherFile.data.forEach(() => {
-//     let description = ;
-//     let date = ;
-//     let x = new weatherData(description, date);
-//     arr.push(x);
-//     errorHandler();
-
-//   });
-//   response.status(200).json(arr);
+app.get('/weather', (request, response) => {
 
 
-// });
 
-// function weatherData(description, date) {
-//   this.forecast = description;
-//   this.time=date;
+  const weatherRes = require('./data/darksky.json');
+  console.log(weatherRes.data);
+  const weatherSummery = [];
+  weatherRes.data.forEach((day)=> {
+    weatherSummery.push(new Weather(day));
+  });
 
-// }
+  response.status(200).json(weatherSummery);
+
+});
+
+
+function Weather(sky) {
+  this.forecast = sky.weather.description;
+  this.time = new Date(sky.valid_date).toString().slice(0, 15);
+}
 app.use('*', notFoundHandler);
 function Location(city, geoData) {
   this.search_query = city;
