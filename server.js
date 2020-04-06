@@ -13,9 +13,6 @@ app.use(cors());
 app.get('/', (request, response) => {
   response.status(200).send('Home Page!');
 });
-app.get('/bad', (request, response) => {
-  throw new Error('oh nooooo!');
-});
 
 app.get('/location', (request, response) => {
   try {
@@ -27,6 +24,27 @@ app.get('/location', (request, response) => {
     errorHandler(error, request, response);
   }
 });
+// app.get('/weather', (request, response) => {
+//   const weatherFile = require('./data/darksky.json');
+//   let arr=[];
+//   weatherFile.data.forEach(() => {
+//     let description = ;
+//     let date = ;
+//     let x = new weatherData(description, date);
+//     arr.push(x);
+//     errorHandler();
+
+//   });
+//   response.status(200).json(arr);
+
+
+// });
+
+// function weatherData(description, date) {
+//   this.forecast = description;
+//   this.time=date;
+
+// }
 app.use('*', notFoundHandler);
 function Location(city, geoData) {
   this.search_query = city;
@@ -34,6 +52,7 @@ function Location(city, geoData) {
   this.latitude = geoData[0].lat;
   this.longitude = geoData[0].lon;
 }
+
 // HELPER FUNCTIONS
 function notFoundHandler(request, response) {
   response.status(404).send('NOT FOUND!!');
